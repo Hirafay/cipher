@@ -28,18 +28,21 @@ jobs:
         if: runner.os == 'Windows'
         env:
           GH_TOKEN: ""
+          CI: false
         run: npm run build-windows
       
       - name: Build Linux
         if: runner.os == 'Linux'
         env:
           GH_TOKEN: ""
+          CI: false
         run: npm run build-linux
       
       - name: Build macOS
         if: runner.os == 'macOS'
         env:
           GH_TOKEN: ""
+          CI: false
         run: |
           brew install python3
           ln -sf /usr/local/bin/python3 /usr/local/bin/python
