@@ -1,16 +1,21 @@
 {
   "name": "cipher",
   "version": "1.0.0",
-  "description": "Cipher - A customizable terminal UI for system monitoring and hacking",
-  "author": "Hirafay",
+  "description": "Cipher - A customizable terminal UI for system monitoring, network analysis, and penetration testing",
+  "author": "Hirafay <hirafay07@gmail.com> (https://github.com/Hirafay)",
+  "license": "GPL-3.0",
+  "main": "src/_boot.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Hirafay/cipher.git"
-  }
-}
-  "main": "src/_boot.js",
+  },
+  "bugs": {
+    "url": "https://github.com/Hirafay/cipher/issues"
+  },
+  "homepage": "https://github.com/Hirafay/cipher#readme",
   "scripts": {
     "start": "electron src --nointro",
+    "dev": "electron src",
     "install-linux": "npm install && cd src && npm install && ./../node_modules/.bin/electron-rebuild -f -w node-pty && cd ..",
     "preinstall-windows": "npm install --global --production windows-build-tools && npm install --global node-gyp && setx PYTHON \"%USERPROFILE%\\.windows-build-tools\\python27\\python.exe\"",
     "install-windows": "npm install && cd src && npm install && ..\\node_modules\\.bin\\electron-rebuild -f -w node-pty && cd ..",
@@ -20,6 +25,7 @@
     "build-linux": "./node_modules/.bin/electron-builder build -l --x64 --ia32 --arm64 --armv7l",
     "build-darwin": "./node_modules/.bin/electron-builder build -m",
     "build-windows": "node_modules\\.bin\\electron-builder build -w",
+    "build": "npm run prebuild-windows && npm run build-windows && npm run postbuild-windows",
     "postbuild-linux": "rm -R prebuild-src",
     "postbuild-darwin": "rm -R prebuild-src",
     "postbuild-windows": "rmdir /S /Q prebuild-src",
@@ -27,30 +33,20 @@
     "init-file-icons": "git submodule update --init",
     "update-file-icons": "git submodule foreach git pull origin master && node file-icons-generator.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GitSquared/edex-ui.git"
-  },
-  "author": "Gabriel 'Squared' SAILLARD <gabriel@saillard.dev> (https://gaby.dev)",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/GitSquared/edex-ui/issues"
-  },
-  "homepage": "https://github.com/GitSquared/edex-ui#readme",
   "build": {
-    "appId": "com.edex.ui",
-    "productName": "eDEX-UI",
+    "appId": "com.hirafay.cipher",
+    "productName": "Cipher",
     "publish": "github",
     "asar": true,
     "compression": "normal",
-    "copyright": "Copyright © 2017-2021 Gabriel 'Squared' SAILLARD <gabriel@saillard.dev> (https://gaby.dev)",
+    "copyright": "Copyright © 2024 Hirafay (https://github.com/Hirafay). Based on edex-ui by GitSquared.",
     "directories": {
       "output": "dist",
       "app": "prebuild-src"
     },
     "forceCodeSigning": false,
     "npmRebuild": true,
-    "artifactName": "eDEX-UI-${os}-${arch}.${ext}",
+    "artifactName": "cipher-${version}-${os}-${arch}.${ext}",
     "linux": {
       "target": [
         "AppImage"
@@ -59,14 +55,15 @@
       "icon": "media/linuxIcons"
     },
     "appImage": {
-      "artifactName": "eDEX-UI-Linux-${arch}.AppImage"
+      "artifactName": "cipher-${version}-linux-${arch}.AppImage"
     },
     "mac": {
       "target": [
         {
           "target": "dmg",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         }
       ],
@@ -74,7 +71,7 @@
       "icon": "media/icon.icns"
     },
     "dmg": {
-      "artifactName": "eDEX-UI-macOS-${arch}.dmg"
+      "artifactName": "cipher-${version}-macos-${arch}.dmg"
     },
     "win": {
       "target": [
@@ -84,15 +81,24 @@
             "x64",
             "ia32"
           ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "icon": "media/icon.ico"
     },
     "nsis": {
-      "artifactName": "eDEX-UI-Windows-${arch}.exe",
+      "artifactName": "cipher-${version}-windows-${arch}.exe",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "deleteAppDataOnUninstall": true
+      "deleteAppDataOnUninstall": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Cipher"
     }
   },
   "dependencies": {
