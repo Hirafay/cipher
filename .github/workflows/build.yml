@@ -1,0 +1,57 @@
+name: Build Cipher Multi-Platform
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: npm run build-windows
+      
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        run: npm run build-linux
+      
+      - name: Build (macOS)
+        if: runner.os == 'macOS'
+        run: npm run build-darwin
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cipher-${{ matrix.os }}
+          path: dist/
+          retention-days: 30
+      
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/**/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
