@@ -38,16 +38,15 @@ jobs:
           CI: false
         run: npm run build-linux
       
-      - name: Build macOS
+     - name: Build macOS
         if: runner.os == 'macOS'
         env:
           GH_TOKEN: ""
           CI: false
         run: |
           brew install python3
-          ln -sf /usr/local/bin/python3 /usr/local/bin/python
-          npm run build-darwin
-      
+          python3 --version
+          npm run build-darwin      
       - uses: actions/upload-artifact@v4
         if: always()
         with:
