@@ -3,7 +3,7 @@ const {app, BrowserWindow, dialog, shell} = require("electron");
 
 process.on("uncaughtException", e => {
     signale.fatal(e);
-    dialog.showErrorBox("eDEX-UI crashed", e.message || "Cannot retrieve error message.");
+    dialog.showErrorBox("Cipher  crashed", e.message || "Cannot retrieve error message.");
     if (tty) {
         tty.close();
     }
@@ -17,7 +17,7 @@ process.on("uncaughtException", e => {
     process.exit(1);
 });
 
-signale.start(`Starting eDEX-UI v${app.getVersion()}`);
+signale.start(`Starting Cipher v${app.getVersion()}`);
 signale.info(`With Node ${process.versions.node} and Electron ${process.versions.electron}`);
 signale.info(`Renderer is Chrome ${process.versions.chrome}`);
 
@@ -178,7 +178,7 @@ function createWindow(settings) {
     let {x, y, width, height} = display.bounds;
     width++; height++;
     win = new BrowserWindow({
-        title: "eDEX-UI",
+        title: "Cipher ",
         x,
         y,
         width,
@@ -192,7 +192,6 @@ function createWindow(settings) {
         backgroundColor: '#000000',
         webPreferences: {
             devTools: true,
-	    enableRemoteModule: true,
             contextIsolation: false,
             backgroundThrottling: false,
             webSecurity: true,
@@ -202,6 +201,8 @@ function createWindow(settings) {
             experimentalFeatures: settings.experimentalFeatures || false
         }
     });
+
+    require("@electron/remote/main").enable(win.webContents);
 
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'ui.html'),
@@ -236,7 +237,7 @@ app.on('ready', async () => {
     Object.assign(cleanEnv, {
         TERM: "xterm-256color",
         COLORTERM: "truecolor",
-        TERM_PROGRAM: "eDEX-UI",
+        TERM_PROGRAM: "cipher",
         TERM_PROGRAM_VERSION: app.getVersion()
     }, settings.env);
 

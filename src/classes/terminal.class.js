@@ -293,7 +293,7 @@ class Terminal {
                     this.clipboard.didCopy = true;
                 },
                 paste: () => {
-                    this.write(remote.clipboard.readText());
+                    this.write(require("@electron/remote").clipboard.readText());
                     this.clipboard.didCopy = false;
                 },
                 didCopy: false
@@ -421,15 +421,29 @@ class Terminal {
 
             this.wss = new this.Websocket({
                 port: this.port,
+                host: "127.0.0.1",
                 clientTracking: true,
                 verifyClient: info => {
-                    if (this.wss.clients.length >= 1) {
+                    // SECURITY FIX — WebSocket hijacking RCE protection.
+                    // A malicious web page could otherwise connect to this local
+                    // terminal socket and execute arbitrary shell commands.
+                    // Allow only the local Electron app (file:// origin or none);
+                    // reject any http(s) web origin and log the attempt.
+                    const origin = (info.origin || (info.req && info.req.headers && info.req.headers.origin) || "").toLowerCase();
+
+                    if (origin.startsWith("http://") || origin.startsWith("https://")) {
+                        console.warn("[Cipher][Security] Blocked WebSocket connection from web origin:", origin);
                         return false;
-                    } else {
-                        return true;
                     }
+
+                    if (this.wss.clients.size >= 1) {
+                        return false;
+                    }
+
+                    return true;
                 }
             });
+
             this.Ipc.on("terminal_channel-"+this.port, (e, ...args) => {
                 switch(args[0]) {
                     case "Renderer startup":
