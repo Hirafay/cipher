@@ -36,7 +36,7 @@
   "build": {
     "appId": "com.hirafay.cipher",
     "productName": "Cipher",
-    "publish": "null",
+    "publish": "false",
     "asar": true,
     "compression": "normal",
     "copyright": "Copyright © 2024 Hirafay (https://github.com/Hirafay). Based on edex-ui by GitSquared.",
