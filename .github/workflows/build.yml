@@ -30,8 +30,6 @@ jobs:
 
       - name: Build Windows
         if: runner.os == 'Windows'
-        env:
-          GYP_MSVS_VERSION: 2022
         run: npm run build-windows
 
       - name: Build Linux
