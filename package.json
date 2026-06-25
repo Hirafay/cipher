@@ -1,16 +1,13 @@
 {
-  "name": "edex-ui",
-  "productName": "eDEX-UI",
-  "version": "2.2.8",
-  "description": "A science fiction desktop running everywhere. Awesome.",
-  "keywords": [
-    "desktop",
-    "sci-fi",
-    "gui",
-    "portable",
-    "tty",
-    "terminal"
-  ],
+  "name": "cipher",
+  "version": "1.0.0",
+  "description": "Cipher - A customizable terminal UI for system monitoring and hacking",
+  "author": "Hirafay",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hirafay/cipher.git"
+  }
+}
   "main": "src/_boot.js",
   "scripts": {
     "start": "electron src --nointro",
