@@ -29,14 +29,20 @@ jobs:
       
       - name: Build (Windows)
         if: runner.os == 'Windows'
+        env:
+          GH_TOKEN: ""
         run: npm run build-windows
       
       - name: Build (Linux)
         if: runner.os == 'Linux'
+        env:
+          GH_TOKEN: ""
         run: npm run build-linux
       
       - name: Build (macOS)
         if: runner.os == 'macOS'
+        env:
+          GH_TOKEN: ""
         run: npm run build-darwin
       
       - name: Upload artifacts
