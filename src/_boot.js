@@ -3,7 +3,7 @@ const {app, BrowserWindow, dialog, shell} = require("electron");
 
 process.on("uncaughtException", e => {
     signale.fatal(e);
-    dialog.showErrorBox("Cipher  crashed", e.message || "Cannot retrieve error message.");
+    dialog.showErrorBox("Cipher crashed", e.message || "Cannot retrieve error message.");
     if (tty) {
         tty.close();
     }
@@ -23,7 +23,7 @@ signale.info(`Renderer is Chrome ${process.versions.chrome}`);
 
 const gotLock = app.requestSingleInstanceLock();
 if (!gotLock) {
-    signale.fatal("Error: Another instance of eDEX is already running. Cannot proceed.");
+    signale.fatal("Error: Another instance of Cipher is already running. Cannot proceed.");
     app.exit(1);
 }
 
@@ -178,7 +178,7 @@ function createWindow(settings) {
     let {x, y, width, height} = display.bounds;
     width++; height++;
     win = new BrowserWindow({
-        title: "Cipher ",
+        title: "Cipher",
         x,
         y,
         width,
@@ -237,7 +237,7 @@ app.on('ready', async () => {
     Object.assign(cleanEnv, {
         TERM: "xterm-256color",
         COLORTERM: "truecolor",
-        TERM_PROGRAM: "cipher",
+        TERM_PROGRAM: "Cipher",
         TERM_PROGRAM_VERSION: app.getVersion()
     }, settings.env);
 
