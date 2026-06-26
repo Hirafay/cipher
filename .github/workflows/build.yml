@@ -24,7 +24,22 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+
+      # Pin Python 3.11 — node-gyp can't parse the runner's default 3.14
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Give node-gyp a real MSVC toolchain it can find (Windows only)
+      - name: Setup MSVC (Windows)
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      # Linux native build deps
+      - name: Setup Linux build deps
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y build-essential
 
       - run: npm install
 
