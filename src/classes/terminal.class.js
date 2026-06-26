@@ -301,7 +301,7 @@ class Terminal {
 
         } else if (opts.role === "server") {
 
-            this.Pty = require("@homebridge/node-pty-prebuilt-multiarch");
+            this.Pty = require("node-pty");
             this.Websocket = require("ws").Server;
             this.Ipc = require("electron").ipcMain;
 
