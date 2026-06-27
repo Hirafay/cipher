@@ -23,7 +23,7 @@ class UpdateChecker {
 				try {
 					const release = JSON.parse(data);
 					const latestVersion = release.tag_name.replace('v', '');
-					const currentVersion = require("electron").app.getVersion();
+					const currentVersion = require("@electron/remote").app.getVersion();
 					
 					// Compare versions (simple semver comparison)
 					if (this.isNewerVersion(latestVersion, currentVersion)) {
@@ -68,7 +68,7 @@ class UpdateChecker {
 			title: "New version available",
 			html: `
 				<h3>Cipher v${latestVersion} is now available</h3>
-				<p>You are currently running v${require("electron").app.getVersion()}</p>
+				<p>You are currently running v${require("@electron/remote").app.getVersion()}</p>
 				<p>Download the latest version from <a href="${releaseUrl}" style="color: #00ff88; text-decoration: underline;">GitHub releases</a></p>
 				<br>
 				<p><strong>Changelog:</strong> Check the release page for details on what's new.</p>
@@ -78,9 +78,9 @@ class UpdateChecker {
 					label: "Install Now",
 					action: () => {
 						if (downloadUrl) {
-							require("electron").shell.openExternal(downloadUrl);
+							require("@electron/remote").shell.openExternal(downloadUrl);
 						} else {
-							require("electron").shell.openExternal(releaseUrl);
+							require("@electron/remote").shell.openExternal(releaseUrl);
 						}
 					}
 				},

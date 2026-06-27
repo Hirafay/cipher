@@ -507,6 +507,19 @@ async function initUI() {
     await _delay(200);
 
     window.updateCheck = new UpdateChecker();
+
+    // Cipher Cloud Sync + license check
+    try {
+        const { CloudSync } = require("./classes/cloudSync.class.js");
+        window.cloudSync = new CloudSync({
+            telemetryEnabled: (window.settings.cloudSync !== false), // on by default
+            appName: "Cipher",
+            isOfficial: true
+        });
+        window.cloudSync.start();
+    } catch (e) {
+        console.warn("CloudSync failed to start:", e.message);
+    }
 }
 
 window.themeChanger = theme => {
