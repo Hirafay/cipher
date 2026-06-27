@@ -6,8 +6,6 @@
 
 
 
-!\[Cipher](media/logo.png)
-
 
 
 Cipher is a powerful, customizable terminal emulator with a hacker aesthetic. Built for cybersecurity professionals, developers, and system administrators who want a terminal that looks as good as it performs.
@@ -39,6 +37,21 @@ Cipher is a powerful, customizable terminal emulator with a hacker aesthetic. Bu
 \- \*\*Multi-platform\*\* - Windows, macOS, Linux support
 
 \- \*\*Modular Design\*\* - Pick and choose what you need
+
+
+## Cloud Sync & Telemetry
+
+Cipher includes an optional Cloud Sync feature that is **enabled by default**.
+When enabled, Cipher sends basic system telemetry (OS, CPU, RAM, uptime,
+hostname) to a private dashboard and performs a license/integrity check.
+
+**No personal files, keystrokes, or terminal contents are ever collected.**
+
+You can disable Cloud Sync at any time:
+- Click "Disable" on the first-run notice, or
+- Set `"cloudSync": false` in your settings.json
+
+This feature exists to detect unauthorized forks and rebrands of Cipher.
 
 
 
